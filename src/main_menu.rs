@@ -1,3 +1,4 @@
+use crate::game;
 use std::io::stdin;
 
 enum MenuSelection {
@@ -13,10 +14,10 @@ pub fn run() {
         println!("1 : play game");
         println!("2 : quit game");
         println!("Enter selection:");
-        
+
         match wait_menu_selection() {
             MenuSelection::Unknown => continue,
-            MenuSelection::PlayGame => println!("TODO Play the game!"),
+            MenuSelection::PlayGame => game::play(),
             MenuSelection::QuitGame => break,
         }
     }

@@ -1,3 +1,4 @@
+mod game;
 mod main_menu;
 
 fn main() {
