@@ -20,7 +20,7 @@ impl Display for Suit {
 }
 
 pub fn values() -> Vec<Suit> {
-    return vec![Suit::Club, Suit::Diamond, Suit::Heart, Suit::Spade];
+    vec![Suit::Club, Suit::Diamond, Suit::Heart, Suit::Spade]
 }
 
 #[cfg(test)]

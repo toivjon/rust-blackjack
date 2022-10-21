@@ -58,7 +58,7 @@ impl Rank {
 }
 
 pub fn values() -> Vec<Rank> {
-    return vec![
+    vec![
         Rank::Ace,
         Rank::Two,
         Rank::Three,
@@ -72,7 +72,7 @@ pub fn values() -> Vec<Rank> {
         Rank::Jack,
         Rank::Queen,
         Rank::King,
-    ];
+    ]
 }
 
 #[cfg(test)]
