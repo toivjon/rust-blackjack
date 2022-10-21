@@ -4,6 +4,7 @@ use std::{
 };
 
 use crate::rank::{self, Rank};
+use crate::suit::{self, Suit};
 
 // The amount of suits in a full card deck.
 const SUIT_COUNT: usize = 4;
@@ -18,25 +19,6 @@ enum Decision {
     Unknown,
     Hit,
     Stand,
-}
-
-#[derive(Copy, Clone, PartialEq)]
-enum Suit {
-    Club,
-    Diamond,
-    Heart,
-    Spade,
-}
-
-impl Display for Suit {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self {
-            Suit::Club => write!(f, "♣"),
-            Suit::Diamond => write!(f, "♦"),
-            Suit::Heart => write!(f, "♥"),
-            Suit::Spade => write!(f, "♠"),
-        }
-    }
 }
 
 struct Card {
@@ -101,7 +83,7 @@ pub fn play() {
 
 fn build_deck() -> Vec<Card> {
     let mut deck = Vec::with_capacity(CARD_COUNT);
-    for suit in [Suit::Club, Suit::Diamond, Suit::Heart, Suit::Spade] {
+    for suit in suit::values() {
         for rank in rank::values() {
             deck.push(Card { suit, rank })
         }
@@ -141,7 +123,7 @@ mod tests {
         assert_eq!(CARD_COUNT, deck.capacity());
 
         let mut suits = deck.chunks(RANKS_PER_SUIT);
-        for suit in [Suit::Club, Suit::Diamond, Suit::Heart, Suit::Spade] {
+        for suit in suit::values() {
             let ranks = suits.next().unwrap();
             assert_eq!(RANKS_PER_SUIT, ranks.len());
             for i in 0..RANKS_PER_SUIT {
