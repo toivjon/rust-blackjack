@@ -74,8 +74,9 @@ pub fn play() {
             println!("  total {}", dealer_points)
         }
         println!("Players hand:");
-        println!("  {}", players_hand[0]);
-        println!("  {}", players_hand[1]);
+        for card in players_hand.iter() {
+            println!("  {}", card);
+        }
         if player_points != player_alt_points {
             println!("  total {}/{}", player_points, player_alt_points)
         } else {
@@ -89,7 +90,7 @@ pub fn play() {
             Decision::Unknown => continue,
             Decision::Hit => {
                 println!("Hit!");
-                break;
+                players_hand.push(deck.remove(1)); // TODO select with rng
             }
             Decision::Stand => {
                 println!("Stand!");
