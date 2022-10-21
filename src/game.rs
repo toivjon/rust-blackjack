@@ -1,10 +1,8 @@
-use std::{
-    fmt::{self, Display},
-    io::stdin,
-};
+use std::io::stdin;
 
-use crate::rank::{self, Rank};
-use crate::suit::{self, Suit};
+use crate::card;
+use crate::rank;
+use crate::suit;
 
 // The amount of suits in a full card deck.
 const SUIT_COUNT: usize = 4;
@@ -21,25 +19,14 @@ enum Decision {
     Stand,
 }
 
-struct Card {
-    suit: Suit,
-    rank: Rank,
-}
-
-impl Display for Card {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}{}", self.rank, self.suit)
-    }
-}
-
 pub fn play() {
     let mut deck = build_deck();
 
-    let mut dealers_hand: Vec<Card> = Vec::new();
+    let mut dealers_hand: Vec<card::Card> = Vec::new();
     dealers_hand.push(deck.remove(1)); // TODO select with rng
     dealers_hand.push(deck.remove(1)); // TODO select with rng
 
-    let mut players_hand: Vec<Card> = Vec::new();
+    let mut players_hand: Vec<card::Card> = Vec::new();
     players_hand.push(deck.remove(1)); // TODO select with rng
     players_hand.push(deck.remove(8)); // TODO select with rng
 
@@ -81,17 +68,17 @@ pub fn play() {
     }
 }
 
-fn build_deck() -> Vec<Card> {
+fn build_deck() -> Vec<card::Card> {
     let mut deck = Vec::with_capacity(CARD_COUNT);
     for suit in suit::values() {
         for rank in rank::values() {
-            deck.push(Card { suit, rank })
+            deck.push(card::Card { suit, rank })
         }
     }
     deck
 }
 
-fn get_points_for_cards(cards: &Vec<Card>) -> (usize, usize) {
+fn get_points_for_cards(cards: &Vec<card::Card>) -> (usize, usize) {
     let mut points = (0, 0);
     for card in cards {
         let card_points = card.rank.points();
@@ -135,7 +122,7 @@ mod tests {
 
     #[test]
     fn get_points_for_cards_with_empty_slice() {
-        let deck: Vec<Card> = vec![];
+        let deck: Vec<card::Card> = vec![];
         assert_eq!((0, 0), get_points_for_cards(&deck));
     }
 }
