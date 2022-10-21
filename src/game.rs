@@ -88,10 +88,7 @@ pub fn play() {
 
         match wait_selection() {
             Decision::Unknown => continue,
-            Decision::Hit => {
-                println!("Hit!");
-                players_hand.push(deck.remove(1)); // TODO select with rng
-            }
+            Decision::Hit => players_hand.push(deck.remove(1)), // TODO select with rng
             Decision::Stand => {
                 println!("Stand!");
                 break;
