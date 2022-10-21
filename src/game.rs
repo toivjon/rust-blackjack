@@ -60,8 +60,8 @@ pub fn play() {
     players_hand.push(deck.remove(8)); // TODO select with rng
 
     loop {
-        let (dealer_points, dealer_alt_points) = count_points(&dealers_hand);
-        let (player_points, player_alt_points) = count_points(&players_hand);
+        let (dealer_points, dealer_alt_points) = get_points_for_cards(&dealers_hand);
+        let (player_points, player_alt_points) = get_points_for_cards(&players_hand);
 
         println!("=================");
         println!("BLACKJACK - ROUND");
@@ -107,10 +107,6 @@ fn build_deck() -> Vec<Card> {
         }
     }
     deck
-}
-
-fn count_points(cards: &Vec<Card>) -> (usize, usize) {
-    get_points_for_cards(cards)
 }
 
 fn get_points_for_cards(cards: &Vec<Card>) -> (usize, usize) {
@@ -167,13 +163,13 @@ mod tests {
     }
 
     #[test]
-    fn count_points_with_empty_slice() {
+    fn get_points_for_cards_with_empty_slice() {
         let deck: Vec<Card> = vec![];
-        assert_eq!((0, 0), count_points(&deck));
+        assert_eq!((0, 0), get_points_for_cards(&deck));
     }
 
     #[test]
-    fn count_points_with_one_card() {
+    fn get_points_for_cards_with_one_card() {
         let deck = build_deck();
         for card in deck {
             let points = match card.rank {
@@ -182,7 +178,7 @@ mod tests {
                 11 | 12 | 13 => (10, 10),
                 e => panic!("Unsupported rank: {e}"),
             };
-            assert_eq!(points, count_points(&vec![card]));
+            assert_eq!(points, get_points_for_cards(&vec![card]));
         }
     }
 }
