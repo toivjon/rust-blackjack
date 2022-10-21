@@ -3,6 +3,8 @@ use std::{
     io::stdin,
 };
 
+use crate::rank::{self, Rank};
+
 // The amount of suits in a full card deck.
 const SUIT_COUNT: usize = 4;
 
@@ -39,7 +41,7 @@ impl Display for Suit {
 
 struct Card {
     suit: Suit,
-    rank: usize,
+    rank: Rank,
 }
 
 impl Display for Card {
@@ -100,7 +102,7 @@ pub fn play() {
 fn build_deck() -> Vec<Card> {
     let mut deck = Vec::with_capacity(CARD_COUNT);
     for suit in [Suit::Club, Suit::Diamond, Suit::Heart, Suit::Spade] {
-        for rank in 1..=RANKS_PER_SUIT {
+        for rank in rank::values() {
             deck.push(Card { suit, rank })
         }
     }
@@ -110,21 +112,11 @@ fn build_deck() -> Vec<Card> {
 fn get_points_for_cards(cards: &Vec<Card>) -> (usize, usize) {
     let mut points = (0, 0);
     for card in cards {
-        let card_points = get_points_for_card(&card);
+        let card_points = card.rank.points();
         points.0 += card_points.0;
         points.1 += card_points.1;
     }
     points
-}
-
-// TODO move as a Card member function?
-fn get_points_for_card(card: &Card) -> (usize, usize) {
-    match card.rank {
-        1 => (1, 14),
-        2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 => (card.rank, card.rank),
-        11 | 12 | 13 => (10, 10),
-        e => panic!("Unsupported rank: {e}"),
-    }
 }
 
 fn wait_selection() -> Decision {
@@ -139,7 +131,6 @@ fn wait_selection() -> Decision {
 
 #[cfg(test)]
 mod tests {
-
     use super::*;
 
     #[test]
@@ -155,7 +146,7 @@ mod tests {
             assert_eq!(RANKS_PER_SUIT, ranks.len());
             for i in 0..RANKS_PER_SUIT {
                 assert!(ranks[i].suit == suit);
-                assert!(ranks[i].rank == i + 1);
+                assert!(ranks[i].rank == rank::values()[i]);
             }
         }
     }
@@ -164,19 +155,5 @@ mod tests {
     fn get_points_for_cards_with_empty_slice() {
         let deck: Vec<Card> = vec![];
         assert_eq!((0, 0), get_points_for_cards(&deck));
-    }
-
-    #[test]
-    fn get_points_for_cards_with_one_card() {
-        let deck = build_deck();
-        for card in deck {
-            let points = match card.rank {
-                1 => (1, 14),
-                2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 => (card.rank, card.rank),
-                11 | 12 | 13 => (10, 10),
-                e => panic!("Unsupported rank: {e}"),
-            };
-            assert_eq!(points, get_points_for_cards(&vec![card]));
-        }
     }
 }
