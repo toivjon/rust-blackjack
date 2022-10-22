@@ -1,4 +1,5 @@
 mod card;
+mod deck;
 mod game;
 mod main_menu;
 mod rank;

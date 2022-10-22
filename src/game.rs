@@ -1,44 +1,13 @@
-use rand::seq::SliceRandom;
 use rand::thread_rng;
-use rand::Rng;
 use std::io::stdin;
 
 use crate::card;
-use crate::card::Card;
-use crate::rank;
-use crate::suit;
+use crate::deck::Deck;
 
 enum Decision {
     Unknown,
     Hit,
     Stand,
-}
-
-struct Deck {
-    cards: Vec<card::Card>,
-}
-
-impl Deck {
-    fn new() -> Deck {
-        let mut cards = Vec::with_capacity(suit::values().len() * rank::values().len());
-        for suit in suit::values() {
-            for rank in rank::values() {
-                cards.push(Card { rank, suit });
-            }
-        }
-        return Deck { cards };
-    }
-
-    fn shuffle<R>(&mut self, rng: &mut R)
-    where
-        R: Rng + ?Sized,
-    {
-        self.cards.shuffle(rng);
-    }
-
-    fn draw(&mut self) -> card::Card {
-        return self.cards.remove(0);
-    }
 }
 
 pub fn play() {
@@ -114,33 +83,6 @@ fn wait_selection() -> Decision {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    // The amount of suits in a full card deck.
-    const SUIT_COUNT: usize = 4;
-
-    /// The amount of ranks per one card suit.
-    const RANKS_PER_SUIT: usize = 13;
-
-    /// The amount of cards in a full card deck.
-    const CARD_COUNT: usize = SUIT_COUNT * RANKS_PER_SUIT;
-
-    #[test]
-    fn build_deck_contains_all_suits_and_ranks() {
-        let deck = Deck::new();
-
-        assert_eq!(CARD_COUNT, deck.cards.len());
-        assert_eq!(CARD_COUNT, deck.cards.capacity());
-
-        let mut suits = deck.cards.chunks(RANKS_PER_SUIT);
-        for suit in suit::values() {
-            let ranks = suits.next().unwrap();
-            assert_eq!(RANKS_PER_SUIT, ranks.len());
-            for i in 0..RANKS_PER_SUIT {
-                assert!(ranks[i].suit == suit);
-                assert!(ranks[i].rank == rank::values()[i]);
-            }
-        }
-    }
 
     #[test]
     fn get_points_for_cards_with_empty_slice() {
