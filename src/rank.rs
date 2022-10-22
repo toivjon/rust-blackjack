@@ -77,8 +77,27 @@ pub fn values() -> Vec<Rank> {
 
 #[cfg(test)]
 mod tests {
+    use super::*;
 
     // TODO Test that Rank display implementation returns correct strings for each rank.
     // TODO Test that Rank points implementation returns correct points for each rank.
-    // TODO Test that values implementation returns all values.
+
+    #[test]
+    fn test_values() {
+        let vals = values();
+        assert_eq!(13, vals.len());
+        assert!(vals[0] == Rank::Ace);
+        assert!(vals[1] == Rank::Two);
+        assert!(vals[2] == Rank::Three);
+        assert!(vals[3] == Rank::Four);
+        assert!(vals[4] == Rank::Five);
+        assert!(vals[5] == Rank::Six);
+        assert!(vals[6] == Rank::Seven);
+        assert!(vals[7] == Rank::Eight);
+        assert!(vals[8] == Rank::Nine);
+        assert!(vals[9] == Rank::Ten);
+        assert!(vals[10] == Rank::Jack);
+        assert!(vals[11] == Rank::Queen);
+        assert!(vals[12] == Rank::King);
+    }
 }
