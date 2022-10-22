@@ -8,15 +8,6 @@ use crate::card::Card;
 use crate::rank;
 use crate::suit;
 
-// The amount of suits in a full card deck.
-const SUIT_COUNT: usize = 4;
-
-/// The amount of ranks per one card suit.
-const RANKS_PER_SUIT: usize = 13;
-
-/// The amount of cards in a full card deck.
-const CARD_COUNT: usize = SUIT_COUNT * RANKS_PER_SUIT;
-
 enum Decision {
     Unknown,
     Hit,
@@ -123,6 +114,15 @@ fn wait_selection() -> Decision {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    // The amount of suits in a full card deck.
+    const SUIT_COUNT: usize = 4;
+
+    /// The amount of ranks per one card suit.
+    const RANKS_PER_SUIT: usize = 13;
+
+    /// The amount of cards in a full card deck.
+    const CARD_COUNT: usize = SUIT_COUNT * RANKS_PER_SUIT;
 
     #[test]
     fn build_deck_contains_all_suits_and_ranks() {
