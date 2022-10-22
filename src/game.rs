@@ -1,6 +1,10 @@
+use rand::seq::SliceRandom;
+use rand::thread_rng;
+use rand::Rng;
 use std::io::stdin;
 
 use crate::card;
+use crate::card::Card;
 use crate::rank;
 use crate::suit;
 
@@ -19,16 +23,44 @@ enum Decision {
     Stand,
 }
 
+struct Deck {
+    cards: Vec<card::Card>,
+}
+
+impl Deck {
+    fn new() -> Deck {
+        let mut cards = Vec::with_capacity(suit::values().len() * rank::values().len());
+        for suit in suit::values() {
+            for rank in rank::values() {
+                cards.push(Card { rank, suit });
+            }
+        }
+        return Deck { cards };
+    }
+
+    fn shuffle<R>(&mut self, rng: &mut R)
+    where
+        R: Rng + ?Sized,
+    {
+        self.cards.shuffle(rng);
+    }
+
+    fn draw(&mut self) -> card::Card {
+        return self.cards.remove(0);
+    }
+}
+
 pub fn play() {
-    let mut deck = build_deck();
+    let mut deck = Deck::new();
+    deck.shuffle(&mut thread_rng());
 
     let mut dealers_hand: Vec<card::Card> = Vec::new();
-    dealers_hand.push(deck.remove(1)); // TODO select with rng
-    dealers_hand.push(deck.remove(1)); // TODO select with rng
+    dealers_hand.push(deck.draw());
+    dealers_hand.push(deck.draw());
 
     let mut players_hand: Vec<card::Card> = Vec::new();
-    players_hand.push(deck.remove(1)); // TODO select with rng
-    players_hand.push(deck.remove(8)); // TODO select with rng
+    players_hand.push(deck.draw());
+    players_hand.push(deck.draw());
 
     loop {
         let (dealer_points, dealer_alt_points) = get_points_for_cards(&dealers_hand);
@@ -59,23 +91,13 @@ pub fn play() {
 
         match wait_selection() {
             Decision::Unknown => continue,
-            Decision::Hit => players_hand.push(deck.remove(1)), // TODO select with rng
+            Decision::Hit => players_hand.push(deck.draw()),
             Decision::Stand => {
                 println!("Stand!");
                 break;
             }
         }
     }
-}
-
-fn build_deck() -> Vec<card::Card> {
-    let mut deck = Vec::with_capacity(CARD_COUNT);
-    for suit in suit::values() {
-        for rank in rank::values() {
-            deck.push(card::Card { suit, rank })
-        }
-    }
-    deck
 }
 
 fn get_points_for_cards(cards: &Vec<card::Card>) -> (usize, usize) {
@@ -104,12 +126,12 @@ mod tests {
 
     #[test]
     fn build_deck_contains_all_suits_and_ranks() {
-        let deck = build_deck();
+        let deck = Deck::new();
 
-        assert_eq!(CARD_COUNT, deck.len());
-        assert_eq!(CARD_COUNT, deck.capacity());
+        assert_eq!(CARD_COUNT, deck.cards.len());
+        assert_eq!(CARD_COUNT, deck.cards.capacity());
 
-        let mut suits = deck.chunks(RANKS_PER_SUIT);
+        let mut suits = deck.cards.chunks(RANKS_PER_SUIT);
         for suit in suit::values() {
             let ranks = suits.next().unwrap();
             assert_eq!(RANKS_PER_SUIT, ranks.len());
