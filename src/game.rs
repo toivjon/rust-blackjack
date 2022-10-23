@@ -25,18 +25,23 @@ pub fn play() {
     let (player_points, player_alt_points) = players_hand.points();
     let (dealer_points, dealer_alt_points) = dealers_hand.points();
 
-    if player_points == 21 || player_alt_points == 21 {
+    let player_hand_is_natural = player_points == 21 || player_alt_points == 21;
+    let dealer_hand_is_natural = dealer_points == 21 || dealer_alt_points == 21;
+
+    if player_hand_is_natural || dealer_hand_is_natural {
         println!("=================");
         println!("BLACKJACK - ROUND");
         dealers_hand.print_reveal();
         players_hand.print_reveal();
-        println!("Player has BLACKJACK!");
-        if dealer_points == 21 || dealer_alt_points == 21 {
-            println!("... dealer also has a BLACKJACK! It's a DRAW!");
+        if player_hand_is_natural && dealer_hand_is_natural {
+            println!("You and dealer both have BLACKJACKS! It's a DRAW!");
             println!("Game over. Better luck next time!");
-        } else {
-            println!("... dealer does not have a BLACKJACK! You WIN!");
+        } else if player_hand_is_natural {
+            println!("You have BLACKJACK! You WIN!");
             println!("Game over. Congratulations!");
+        } else if dealer_hand_is_natural {
+            println!("Dealer has BLACKJACK! You LOSE!");
+            println!("Game over. Better luck next time!");
         }
     } else {
         loop {
