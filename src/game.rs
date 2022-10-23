@@ -43,7 +43,30 @@ pub fn play() {
             Decision::Unknown => continue,
             Decision::Hit => players_hand.add(deck.draw()),
             Decision::Stand => {
-                println!("Stand!");
+                loop {
+                    println!("=================");
+                    println!("BLACKJACK - ROUND");
+                    dealers_hand.print_reveal();
+                    players_hand.print_reveal();
+                    let (dealer_points, dealer_alt_points) = dealers_hand.points();
+                    if dealer_points > 21 && dealer_alt_points > 21 {
+                        println!("Dealer card exceeds 21. You WIN!");
+                        println!("Game over. Congratulations!");
+                        break;
+                    } else if dealer_points > points && dealer_points > alt_points {
+                        println!("Dealer has higher points. You LOSE!");
+                        println!("Game over. Better luck next time!");
+                        break;
+                    } else if dealer_alt_points < 21
+                        && dealer_alt_points > points
+                        && dealer_alt_points > alt_points
+                    {
+                        println!("Dealer has higher points. You LOSE!");
+                        println!("Game over. Better luck next time!");
+                        break;
+                    }
+                    dealers_hand.add(deck.draw());
+                }
                 break;
             }
         }
