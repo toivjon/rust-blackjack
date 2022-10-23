@@ -1,7 +1,5 @@
 use std::fmt::{self, Display};
 
-// TODO Ease the points calculation as we should always count ace as 11 if the points total does not exceed 21.
-
 #[derive(PartialEq, Debug)]
 pub enum Rank {
     Ace,
