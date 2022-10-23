@@ -15,7 +15,7 @@ pub fn run() {
         println!("2 : quit game");
         println!("Enter selection:");
 
-        match wait_menu_selection() {
+        match wait_selection() {
             MenuSelection::Unknown => continue,
             MenuSelection::PlayGame => game::play(),
             MenuSelection::QuitGame => break,
@@ -23,7 +23,7 @@ pub fn run() {
     }
 }
 
-fn wait_menu_selection() -> MenuSelection {
+fn wait_selection() -> MenuSelection {
     let mut input = String::new();
     stdin().read_line(&mut input).expect("Invalid input");
     match input.trim() {
