@@ -40,7 +40,7 @@ impl Display for Rank {
 impl Rank {
     pub fn points(&self) -> (usize, usize) {
         match self {
-            Rank::Ace => (1, 14),
+            Rank::Ace => (1, 11),
             Rank::Two => (2, 2),
             Rank::Three => (3, 3),
             Rank::Four => (4, 4),
