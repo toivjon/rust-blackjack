@@ -22,10 +22,9 @@ pub fn play() {
     players_hand.add(deck.draw());
     players_hand.add(deck.draw());
 
-    loop {
-        // let (dealer_points, dealer_alt_points) = dealers_hand.points();
-        // let (player_points, player_alt_points) = players_hand.points();
+    // TODO Check for initial blackjacks!
 
+    loop {
         println!("=================");
         println!("BLACKJACK - ROUND");
         dealers_hand.print_partial();
@@ -42,6 +41,8 @@ pub fn play() {
                 break;
             }
         }
+
+        // TODO Check whether player exceeded 21 -> lose immediately.
     }
 }
 

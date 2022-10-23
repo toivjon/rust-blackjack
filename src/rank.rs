@@ -80,7 +80,23 @@ mod tests {
     use super::*;
 
     // TODO Test that Rank display implementation returns correct strings for each rank.
-    // TODO Test that Rank points implementation returns correct points for each rank.
+
+    #[test]
+    fn test_points() {
+        assert_eq!((1, 11), Rank::Ace.points());
+        assert_eq!((2, 2), Rank::Two.points());
+        assert_eq!((3, 3), Rank::Three.points());
+        assert_eq!((4, 4), Rank::Four.points());
+        assert_eq!((5, 5), Rank::Five.points());
+        assert_eq!((6, 6), Rank::Six.points());
+        assert_eq!((7, 7), Rank::Seven.points());
+        assert_eq!((8, 8), Rank::Eight.points());
+        assert_eq!((9, 9), Rank::Nine.points());
+        assert_eq!((10, 10), Rank::Ten.points());
+        assert_eq!((10, 10), Rank::Jack.points());
+        assert_eq!((10, 10), Rank::Queen.points());
+        assert_eq!((10, 10), Rank::King.points());
+    }
 
     #[test]
     fn test_values() {
