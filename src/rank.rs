@@ -1,6 +1,6 @@
 use std::fmt::{self, Display};
 
-#[derive(PartialEq)]
+#[derive(PartialEq, Debug)]
 pub enum Rank {
     Ace,
     Two,
@@ -102,18 +102,18 @@ mod tests {
     fn test_values() {
         let vals = values();
         assert_eq!(13, vals.len());
-        assert!(vals[0] == Rank::Ace);
-        assert!(vals[1] == Rank::Two);
-        assert!(vals[2] == Rank::Three);
-        assert!(vals[3] == Rank::Four);
-        assert!(vals[4] == Rank::Five);
-        assert!(vals[5] == Rank::Six);
-        assert!(vals[6] == Rank::Seven);
-        assert!(vals[7] == Rank::Eight);
-        assert!(vals[8] == Rank::Nine);
-        assert!(vals[9] == Rank::Ten);
-        assert!(vals[10] == Rank::Jack);
-        assert!(vals[11] == Rank::Queen);
-        assert!(vals[12] == Rank::King);
+        assert_eq!(vals[0], Rank::Ace);
+        assert_eq!(vals[1], Rank::Two);
+        assert_eq!(vals[2], Rank::Three);
+        assert_eq!(vals[3], Rank::Four);
+        assert_eq!(vals[4], Rank::Five);
+        assert_eq!(vals[5], Rank::Six);
+        assert_eq!(vals[6], Rank::Seven);
+        assert_eq!(vals[7], Rank::Eight);
+        assert_eq!(vals[8], Rank::Nine);
+        assert_eq!(vals[9], Rank::Ten);
+        assert_eq!(vals[10], Rank::Jack);
+        assert_eq!(vals[11], Rank::Queen);
+        assert_eq!(vals[12], Rank::King);
     }
 }

@@ -1,6 +1,6 @@
 use std::fmt::{self, Display};
 
-#[derive(PartialEq, Clone, Copy)]
+#[derive(PartialEq, Clone, Copy, Debug)]
 pub enum Suit {
     Club,
     Diamond,
@@ -32,9 +32,9 @@ mod tests {
     fn test_values() {
         let vals = values();
         assert_eq!(4, vals.len());
-        assert!(vals[0] == Suit::Club);
-        assert!(vals[1] == Suit::Diamond);
-        assert!(vals[2] == Suit::Heart);
-        assert!(vals[3] == Suit::Spade);
+        assert_eq!(vals[0], Suit::Club);
+        assert_eq!(vals[1], Suit::Diamond);
+        assert_eq!(vals[2], Suit::Heart);
+        assert_eq!(vals[3], Suit::Spade);
     }
 }
