@@ -41,9 +41,7 @@ pub fn play() {
 
         match wait_selection() {
             Decision::Unknown => continue,
-            Decision::Hit => {
-                players_hand.add(deck.draw());
-            }
+            Decision::Hit => players_hand.add(deck.draw()),
             Decision::Stand => {
                 println!("Stand!");
                 break;
