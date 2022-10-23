@@ -25,7 +25,16 @@ pub fn values() -> Vec<Suit> {
 
 #[cfg(test)]
 mod tests {
-
+    use super::*;
     // TODO Test that Suit display implementation returns correct string for each suit.
-    // TODO Test that values implementation returns all values.
+
+    #[test]
+    fn test_values() {
+        let vals = values();
+        assert_eq!(4, vals.len());
+        assert!(vals[0] == Suit::Club);
+        assert!(vals[1] == Suit::Diamond);
+        assert!(vals[2] == Suit::Heart);
+        assert!(vals[3] == Suit::Spade);
+    }
 }
