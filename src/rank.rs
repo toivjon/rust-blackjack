@@ -81,7 +81,22 @@ pub fn values() -> Vec<Rank> {
 mod tests {
     use super::*;
 
-    // TODO Test that Rank display implementation returns correct strings for each rank.
+    #[test]
+    fn test_display() {
+        assert_eq!("A", Rank::Ace.to_string());
+        assert_eq!("2", Rank::Two.to_string());
+        assert_eq!("3", Rank::Three.to_string());
+        assert_eq!("4", Rank::Four.to_string());
+        assert_eq!("5", Rank::Five.to_string());
+        assert_eq!("6", Rank::Six.to_string());
+        assert_eq!("7", Rank::Seven.to_string());
+        assert_eq!("8", Rank::Eight.to_string());
+        assert_eq!("9", Rank::Nine.to_string());
+        assert_eq!("10", Rank::Ten.to_string());
+        assert_eq!("J", Rank::Jack.to_string());
+        assert_eq!("Q", Rank::Queen.to_string());
+        assert_eq!("K", Rank::King.to_string());
+    }
 
     #[test]
     fn test_points() {
