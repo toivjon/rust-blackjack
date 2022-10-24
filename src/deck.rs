@@ -17,7 +17,7 @@ impl Deck {
                 cards.push(Card { rank, suit });
             }
         }
-        return Deck { cards };
+        Deck { cards }
     }
 
     pub fn shuffle<R>(&mut self, rng: &mut R)
@@ -28,7 +28,7 @@ impl Deck {
     }
 
     pub fn draw(&mut self) -> Card {
-        return self.cards.remove(0);
+        self.cards.remove(0)
     }
 }
 
