@@ -7,10 +7,10 @@ pub struct Hand {
 
 impl Hand {
     pub fn new(name: &str) -> Hand {
-        return Hand {
+        Hand {
             name: name.to_string(),
             cards: vec![],
-        };
+        }
     }
 
     pub fn add(&mut self, card: Card) {
