@@ -73,13 +73,10 @@ pub fn play() {
                             println!("Dealer card exceeds 21. You WIN!");
                             println!("Game over. Congratulations!");
                             break;
-                        } else if dealer_points > points && dealer_points > alt_points {
-                            println!("Dealer has higher points. You LOSE!");
-                            println!("Game over. Better luck next time!");
-                            break;
-                        } else if dealer_alt_points < 21
-                            && dealer_alt_points > points
-                            && dealer_alt_points > alt_points
+                        } else if dealer_points > points && dealer_points > alt_points
+                            || (dealer_alt_points < 21
+                                && dealer_alt_points > points
+                                && dealer_alt_points > alt_points)
                         {
                             println!("Dealer has higher points. You LOSE!");
                             println!("Game over. Better luck next time!");
