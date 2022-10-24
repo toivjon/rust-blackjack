@@ -1,4 +1,4 @@
-use std::fmt::{self, Display};
+use std::fmt;
 
 #[derive(PartialEq, Eq, Debug)]
 pub enum Rank {
@@ -17,7 +17,7 @@ pub enum Rank {
     King,
 }
 
-impl Display for Rank {
+impl fmt::Display for Rank {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Rank::Ace => write!(f, "A"),

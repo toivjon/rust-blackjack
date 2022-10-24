@@ -1,4 +1,4 @@
-use std::fmt::{self, Display};
+use std::fmt;
 
 #[derive(PartialEq, Eq, Clone, Copy, Debug)]
 pub enum Suit {
@@ -8,7 +8,7 @@ pub enum Suit {
     Spade,
 }
 
-impl Display for Suit {
+impl fmt::Display for Suit {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Suit::Club => write!(f, "♣"),
