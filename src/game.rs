@@ -12,13 +12,8 @@ enum Decision {
 pub fn play() {
     let mut deck = Deck::new();
 
-    let mut dealers_hand = Hand::new("Dealer");
-    dealers_hand.add(deck.draw());
-    dealers_hand.add(deck.draw());
-
-    let mut players_hand = Hand::new("Player");
-    players_hand.add(deck.draw());
-    players_hand.add(deck.draw());
+    let mut players_hand = prepare_hand("Player", &mut deck);
+    let mut dealers_hand = prepare_hand("Dealer", &mut deck);
 
     let (player_points, player_alt_points) = players_hand.points();
     let (dealer_points, dealer_alt_points) = dealers_hand.points();
@@ -89,6 +84,13 @@ pub fn play() {
     }
 }
 
+fn prepare_hand(name: &str, deck: &mut Deck) -> Hand {
+    let mut hand = Hand::new(name);
+    hand.add(deck.draw());
+    hand.add(deck.draw());
+    hand
+}
+
 fn wait_selection() -> Decision {
     let mut input = String::new();
     stdin().read_line(&mut input).expect("Invalid input");
@@ -96,5 +98,18 @@ fn wait_selection() -> Decision {
         "1" => Decision::Hit,
         "2" => Decision::Stand,
         _ => Decision::Unknown,
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_prepare_hand() {
+        let mut deck = Deck::new();
+        let hand = prepare_hand("TEST", &mut deck);
+        assert_eq!(hand.name, "TEST");
+        assert_eq!(hand.cards.len(), 2);
     }
 }

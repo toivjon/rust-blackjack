@@ -1,7 +1,7 @@
 use crate::card::Card;
 
 pub struct Hand {
-    name: String,
+    pub name: String,
     pub cards: Vec<Card>,
 }
 
