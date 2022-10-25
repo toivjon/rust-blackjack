@@ -88,9 +88,17 @@ fn prepare_hand(name: &str, deck: &mut Deck) -> Hand {
     hand
 }
 
+/// Check whether the provided hand is natural aka. Blackjack hand.
+///
+/// Natural hands contain two cards which together provide 21 points. Other card
+/// must be an ace (11 points) and other must be a card which gives ten points.
 fn is_natural(hand: &Hand) -> bool {
-    let (points, alt_points) = hand.points();
-    points == 21 || alt_points == 21
+    if hand.cards.len() != 2 {
+        false
+    } else {
+        let (points, alt_points) = hand.points();
+        points == 21 || alt_points == 21
+    }
 }
 
 fn wait_selection() -> Decision {
