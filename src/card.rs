@@ -2,6 +2,7 @@ use std::fmt;
 
 use crate::{rank::Rank, suit::Suit};
 
+#[derive(PartialEq, Eq)]
 pub struct Card {
     pub suit: Suit,
     pub rank: Rank,

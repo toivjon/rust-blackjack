@@ -1,6 +1,6 @@
 use std::fmt;
 
-#[derive(PartialEq, Eq, Debug)]
+#[derive(PartialEq, Eq, Clone, Copy, Debug)]
 pub enum Rank {
     Ace,
     Two,

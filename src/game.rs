@@ -1,4 +1,3 @@
-use rand::thread_rng;
 use std::io::stdin;
 
 use crate::deck::Deck;
@@ -12,7 +11,6 @@ enum Decision {
 
 pub fn play() {
     let mut deck = Deck::new();
-    deck.shuffle(&mut thread_rng());
 
     let mut dealers_hand = Hand::new("Dealer");
     dealers_hand.add(deck.draw());

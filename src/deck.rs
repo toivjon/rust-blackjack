@@ -1,5 +1,5 @@
 use rand::seq::SliceRandom;
-use rand::Rng;
+use rand::thread_rng;
 
 use crate::card::Card;
 use crate::rank;
@@ -17,14 +17,8 @@ impl Deck {
                 cards.push(Card { rank, suit });
             }
         }
+        cards.shuffle(&mut thread_rng());
         Deck { cards }
-    }
-
-    pub fn shuffle<R>(&mut self, rng: &mut R)
-    where
-        R: Rng + ?Sized,
-    {
-        self.cards.shuffle(rng);
     }
 
     pub fn draw(&mut self) -> Card {
@@ -34,8 +28,31 @@ impl Deck {
 
 #[cfg(test)]
 mod tests {
+    use super::*;
 
-    // TODO Test that constructor builds a deck with all suits and ranks.
-    // TODO Test that shuffle uses shuffling function to shuffle the deck.
-    // TODO Test that draw takes the topmost card from the deck.
+    #[test]
+    fn test_new() {
+        let deck = Deck::new();
+        assert_eq!(
+            deck.cards.len(),
+            suit::values().len() * rank::values().len()
+        );
+        for suit in suit::values() {
+            for rank in rank::values() {
+                assert!(deck.cards.contains(&Card { suit, rank }));
+            }
+        }
+    }
+
+    #[test]
+    fn test_draw() {
+        let mut deck = Deck::new();
+        let top_card = Card {
+            suit: deck.cards[0].suit,
+            rank: deck.cards[0].rank,
+        };
+        let card = deck.draw();
+        assert_eq!(card.suit, top_card.suit);
+        assert_eq!(card.rank, top_card.rank);
+    }
 }
