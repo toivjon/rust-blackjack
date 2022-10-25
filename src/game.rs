@@ -88,10 +88,12 @@ fn prepare_hand(name: &str, deck: &mut Deck) -> Hand {
     hand
 }
 
-/// Check whether the provided hand is natural aka. Blackjack hand.
+/// Check whether the provided hand is natural (aka. Blackjack hand).
 ///
-/// Natural hands contain two cards which together provide 21 points. Other card
-/// must be an ace (11 points) and other must be a card which gives ten points.
+/// Natural hand is a hand that can be acquired only during the first round of
+/// the game. This kind of hand contains two cards which together provide 21
+/// points. This is possible only if the hand contains an Ace (11 points) along
+/// with a card that provides ten points e.g. ten or any of the court cards.
 fn is_natural(hand: &Hand) -> bool {
     if hand.cards.len() != 2 {
         false
