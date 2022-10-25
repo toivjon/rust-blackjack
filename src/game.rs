@@ -15,11 +15,8 @@ pub fn play() {
     let mut players_hand = prepare_hand("Player", &mut deck);
     let mut dealers_hand = prepare_hand("Dealer", &mut deck);
 
-    let (player_points, player_alt_points) = players_hand.points();
-    let (dealer_points, dealer_alt_points) = dealers_hand.points();
-
-    let player_hand_is_natural = player_points == 21 || player_alt_points == 21;
-    let dealer_hand_is_natural = dealer_points == 21 || dealer_alt_points == 21;
+    let player_hand_is_natural = is_natural(&players_hand);
+    let dealer_hand_is_natural = is_natural(&dealers_hand);
 
     if player_hand_is_natural || dealer_hand_is_natural {
         println!("=================");
@@ -91,6 +88,11 @@ fn prepare_hand(name: &str, deck: &mut Deck) -> Hand {
     hand
 }
 
+fn is_natural(hand: &Hand) -> bool {
+    let (points, alt_points) = hand.points();
+    points == 21 || alt_points == 21
+}
+
 fn wait_selection() -> Decision {
     let mut input = String::new();
     stdin().read_line(&mut input).expect("Invalid input");
@@ -103,6 +105,8 @@ fn wait_selection() -> Decision {
 
 #[cfg(test)]
 mod tests {
+    use crate::{card::Card, rank::Rank, suit::Suit};
+
     use super::*;
 
     #[test]
@@ -111,5 +115,19 @@ mod tests {
         let hand = prepare_hand("TEST", &mut deck);
         assert_eq!(hand.name, "TEST");
         assert_eq!(hand.cards.len(), 2);
+    }
+
+    #[test]
+    fn test_is_natural() {
+        let mut hand = Hand::new("TEST");
+        hand.add(Card {
+            suit: Suit::Spade,
+            rank: Rank::Ace,
+        });
+        hand.add(Card {
+            suit: Suit::Spade,
+            rank: Rank::Ten,
+        });
+        assert!(is_natural(&hand));
     }
 }
