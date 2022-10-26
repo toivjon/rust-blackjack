@@ -34,29 +34,33 @@ pub fn play() {
             println!("Game over. Better luck next time!");
         }
     } else {
-        loop {
-            println!("=================");
-            println!("BLACKJACK - ROUND");
-            dealers_hand.print_partial();
-            players_hand.print_reveal();
-            let (points, alt_points) = players_hand.points();
-            if points > 21 && alt_points > 21 {
-                println!("Card total exceeds 21. You LOSE!");
-                println!("Game over. Better luck next time!");
-                break;
-            }
-            println!("1 : Hit");
-            println!("2 : Stand");
-            println!("Enter selection:");
+        play_players_turn(&mut players_hand, &dealers_hand, &mut deck);
+        play_dealers_turn(&players_hand, &mut dealers_hand, &mut deck);
+    }
+}
 
-            match wait_selection() {
-                Decision::Unknown => continue,
-                Decision::Hit => players_hand.add(deck.draw()),
-                Decision::Stand => break,
-            }
+fn play_players_turn(players_hand: &mut Hand, dealers_hand: &Hand, deck: &mut Deck) {
+    loop {
+        println!("=================");
+        println!("BLACKJACK - ROUND");
+        dealers_hand.print_partial();
+        players_hand.print_reveal();
+        let (points, alt_points) = players_hand.points();
+        if points > 21 && alt_points > 21 {
+            println!("Card total exceeds 21. You LOSE!");
+            println!("Game over. Better luck next time!");
+            break;
+        }
+        println!("1 : Hit");
+        println!("2 : Stand");
+        println!("Enter selection:");
+
+        match wait_selection() {
+            Decision::Unknown => continue,
+            Decision::Hit => players_hand.add(deck.draw()),
+            Decision::Stand => break,
         }
     }
-    play_dealers_turn(&players_hand, &mut dealers_hand, &mut deck)
 }
 
 fn play_dealers_turn(players_hand: &Hand, dealers_hand: &mut Hand, deck: &mut Deck) {
