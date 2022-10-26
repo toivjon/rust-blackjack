@@ -52,32 +52,35 @@ pub fn play() {
             match wait_selection() {
                 Decision::Unknown => continue,
                 Decision::Hit => players_hand.add(deck.draw()),
-                Decision::Stand => {
-                    loop {
-                        println!("=================");
-                        println!("BLACKJACK - ROUND");
-                        dealers_hand.print_reveal();
-                        players_hand.print_reveal();
-                        let (dealer_points, dealer_alt_points) = dealers_hand.points();
-                        if dealer_points > 21 && dealer_alt_points > 21 {
-                            println!("Dealer card exceeds 21. You WIN!");
-                            println!("Game over. Congratulations!");
-                            break;
-                        } else if dealer_points > points && dealer_points > alt_points
-                            || (dealer_alt_points < 21
-                                && dealer_alt_points > points
-                                && dealer_alt_points > alt_points)
-                        {
-                            println!("Dealer has higher points. You LOSE!");
-                            println!("Game over. Better luck next time!");
-                            break;
-                        }
-                        dealers_hand.add(deck.draw());
-                    }
-                    break;
-                }
+                Decision::Stand => break,
             }
         }
+    }
+    play_dealers_turn(&players_hand, &mut dealers_hand, &mut deck)
+}
+
+fn play_dealers_turn(players_hand: &Hand, dealers_hand: &mut Hand, deck: &mut Deck) {
+    let (player_points, player_alt_points) = players_hand.points();
+    loop {
+        println!("=================");
+        println!("BLACKJACK - ROUND");
+        dealers_hand.print_reveal();
+        players_hand.print_reveal();
+        let (dealer_points, dealer_alt_points) = dealers_hand.points();
+        if dealer_points > 21 && dealer_alt_points > 21 {
+            println!("Dealer card exceeds 21. You WIN!");
+            println!("Game over. Congratulations!");
+            break;
+        } else if dealer_points > player_points && dealer_points > player_alt_points
+            || (dealer_alt_points < 21
+                && dealer_alt_points > player_points
+                && dealer_alt_points > player_alt_points)
+        {
+            println!("Dealer has higher points. You LOSE!");
+            println!("Game over. Better luck next time!");
+            break;
+        }
+        dealers_hand.add(deck.draw());
     }
 }
 
