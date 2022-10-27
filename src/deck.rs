@@ -10,7 +10,7 @@ pub struct Deck {
 }
 
 impl Deck {
-    pub fn new() -> Deck {
+    pub fn new() -> Self {
         let mut cards = Vec::with_capacity(suit::values().len() * rank::values().len());
         for suit in suit::values() {
             for rank in rank::values() {
@@ -18,7 +18,7 @@ impl Deck {
             }
         }
         cards.shuffle(&mut thread_rng());
-        Deck { cards }
+        Self { cards }
     }
 
     pub fn draw(&mut self) -> Card {

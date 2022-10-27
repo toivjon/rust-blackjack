@@ -6,8 +6,8 @@ pub struct Hand {
 }
 
 impl Hand {
-    pub fn new(name: &str) -> Hand {
-        Hand {
+    pub fn new(name: &str) -> Self {
+        Self {
             name: name.to_string(),
             cards: vec![],
         }
